@@ -13,11 +13,11 @@ instance Functor MaybeM where
   fmap f Nothing = Nothing
 
 instance Applicative MaybeM where
-  pure f = Just f
+  pure k = Just k
 
   -- f (a -> b) -> f a -> f b
   (<*>) _ Nothing = Nothing
-  (<*>) (Just f) (Just a) = Just (f a)
+  (<*>) (Just k) (Just a) = Just (k a)
 
 instance Monad MaybeM where
   return a = Just a
