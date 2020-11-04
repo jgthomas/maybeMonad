@@ -1,7 +1,5 @@
 module MaybeM where
 
---import Control.Applicative (Applicative)
---import Control.Monad.Fail (MonadFail)
 import Prelude hiding (Just, Nothing)
 
 data MaybeM a = Just a | Nothing
