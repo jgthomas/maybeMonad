@@ -9,11 +9,15 @@ data MaybeM a = Just a | Nothing
   deriving (Show)
 
 instance Functor MaybeM where
-  fmap = liftM
+  fmap f (Just a) = Just $ f a
+  fmap f Nothing = Nothing
 
 instance Applicative MaybeM where
-  pure = return
-  (<*>) = ap
+  pure f = Just f
+
+  -- f (a -> b) -> f a -> f b
+  (<*>) _ Nothing = Nothing
+  (<*>) (Just f) (Just a) = Just (f a)
 
 instance Monad MaybeM where
   return a = Just a
