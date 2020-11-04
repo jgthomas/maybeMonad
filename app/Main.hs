@@ -5,7 +5,7 @@ import Prelude hiding (Just, Nothing)
 
 safeHead :: [Int] -> MaybeM Int
 safeHead [] = Nothing
-safeHead (a : as) = Just a
+safeHead (a : _) = Just a
 
 safeAdd :: MaybeM Int -> MaybeM Int -> MaybeM Int
 safeAdd (Just x) (Just y) = (Just $ x + y)
@@ -21,11 +21,14 @@ second = [4, 5, 6]
 third :: [Int]
 third = []
 
+addTo :: Int -> Int -> Int
+addTo x y = x + y
+
 main :: IO ()
 main = do
-  print $ fmap (+ 2) (Just 3)
-  print $ fmap (+ 2) Nothing
-  print $ pure (+ 1) <*> (Just 3)
-  print $ pure (+ 1) <*> Nothing
+  print $ fmap (addTo 2) (Just 3)
+  print $ fmap (addTo 2) Nothing
+  print $ pure (addTo 1) <*> (Just 3)
+  print $ pure (addTo 1) <*> Nothing
   print $ safeAdd (safeHead first) (safeHead second)
   print $ safeAdd (safeHead first) (safeHead third)
